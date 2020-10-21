@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin: 40px;
+    font-weight: 600;
+    font-size: 35pt;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+}
+
+#calculator {
+    height: 500px;
+    width: 400px;
+    border: 2px solid #c9c9c9;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+#screen {
+    height: 15%;
+    margin: 20px 20px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+#read-out {
+    font-size: 20pt;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 0px 5px 0px auto;
+}
+
+#button-container {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(5,75px);
+}
+
+.button {
+    border: none;
+    border-radius: 4px;
+    margin: 7px;
+    font-size: 17pt;
+    font-weight: 300;
+    transition: ease 50ms;
+}
+
+#clear {
+    grid-column: span 2;
+}
+
+#zero {
+    grid-column: span 2;
+}
+
+#equals {
+    grid-row: span 2;
+}
+
+/* RESOONSIVE */
+
+.active {
+    background-color: #f0f0f0;
+}
