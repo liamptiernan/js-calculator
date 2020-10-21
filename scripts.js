@@ -6,7 +6,7 @@ let activeOperation = false;
 let currentOperation;
 
 function operate () {
-
+    keyToggle('Enter','on')
     let numOperand = +operand.join('');
     let numOperator = +operator.join('');
 
@@ -52,6 +52,7 @@ function numberClick (e) {
     };
 
     if (operator.length<=17){
+        keyToggle(e.srcElement.textContent,'on')
         operator.push(+e.srcElement.textContent);
         updateDisplay(operator);
         activeOperation = false;
@@ -62,6 +63,7 @@ function operationClick (e) {
     if (!activeOperation) {
         if (!justEqual){
             if (operand.length!=0 && operator.length!=0) {
+                console.log('click')
                 operate();
             } else {
                 operand = operator;
@@ -99,6 +101,7 @@ function operationClick (e) {
     }; 
     justEqual = false;
     activeOperation = true;
+    keyToggle(e.srcElement.textContent,'on')
 };
 
 function clearClick () {
@@ -109,12 +112,14 @@ function clearClick () {
     currentOperation = null;
     let readOut = document.getElementById('read-out');
     readOut.textContent = '';
+    keyToggle('c','on')
 };
 
 function decimalClick () {
     if (operator.indexOf('.')===-1) {
         operator.push('.');
         updateDisplay(operator);
+        keyToggle('.','on')
     };
 };
 
@@ -169,23 +174,32 @@ function updateDisplay(readOut) {
 const numButtons = document.querySelectorAll('.num-buttons');
 
 for (i=0;i<numButtons.length;i++) {
-    numButtons[i].addEventListener('click',numberClick);
+    numButtons[i].addEventListener('mousedown',numberClick);
 };
 
 const operateButtons = document.querySelectorAll('.operators');
 
 for (i=0;i<operateButtons.length;i++) {
-    operateButtons[i].addEventListener('click',operationClick);
+    operateButtons[i].addEventListener('mousedown',operationClick);
 };
 
 const equalButton = document.getElementById('equals');
-equalButton.addEventListener('click', operate);
+equalButton.addEventListener('mousedown', operate);
 
 const clearButton = document.getElementById('clear');
-clearButton.addEventListener('click', clearClick);
+clearButton.addEventListener('mousedown', clearClick);
 
 const decimalButton = document.getElementById('point');
-decimalButton.addEventListener('click', decimalClick);
+decimalButton.addEventListener('mousedown', decimalClick);
+
+window.addEventListener('mouseup',mouseUp);
+
+function mouseUp() {
+    let allButtons = document.querySelectorAll('.button');
+    for (i=0; i<allButtons.length; i++) {
+        allButtons[i].classList.remove('active');
+    };
+};
 
 // Key Press
 window.addEventListener('keydown',keyPress);
@@ -238,6 +252,7 @@ function numberPress(num) {
     if (operator.length<=17) {
         operator.push(+num);
         updateDisplay(operator);
+        activeOperation = false;
     };
 };
 
@@ -327,7 +342,6 @@ function keyToggle(key,toggle) {
             let button = document.getElementById('point');
             button.classList.remove('active')
         } else {
-            console.log(key)
             for (i=0;i<numButtons.length;i++) {
                 if (numButtons[i].textContent==key) {
                     numButtons[i].classList.remove('active');
